@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bowlingg", "Bowlingg\Bowlingg.csproj", "{06492424-BECD-4A3D-BC23-5104E1107963}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bowling.DAL", "Bowling.DAL\Bowling.DAL.csproj", "{3F249121-386C-49CA-A42E-34C221F43111}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{A343B28C-EDAF-4389-98CA-FC99F36CEF3B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{06492424-BECD-4A3D-BC23-5104E1107963}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06492424-BECD-4A3D-BC23-5104E1107963}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06492424-BECD-4A3D-BC23-5104E1107963}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06492424-BECD-4A3D-BC23-5104E1107963}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F249121-386C-49CA-A42E-34C221F43111}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F249121-386C-49CA-A42E-34C221F43111}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F249121-386C-49CA-A42E-34C221F43111}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F249121-386C-49CA-A42E-34C221F43111}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A343B28C-EDAF-4389-98CA-FC99F36CEF3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A343B28C-EDAF-4389-98CA-FC99F36CEF3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A343B28C-EDAF-4389-98CA-FC99F36CEF3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A343B28C-EDAF-4389-98CA-FC99F36CEF3B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
