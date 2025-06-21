@@ -1,0 +1,63 @@
+@rendermode InteractiveServer
+@using Database
+@using Bowling.Models
+@inject BowlingContext ef
+@page "/Payment"
+<h3>Оплата</h3>
+
+<EditForm FormName="formAddItem" Model="_payment" OnValidSubmit="@Submit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <p>Введите название дорожки, которую хотите забронировать</p>
+    <input type="text" @bind="@_payment.TrackId"/>
+    <p>Введите сумму</p>
+    <input type="text" @bind="_payment.Amount "/>
+    <p>Введите время, которое вы выбрали</p>
+    <input type="text" @bind="_payment.Time"/>
+    
+    <button type="submit">Сохранить</button>
+</EditForm>
+
+<table class="table table-bordered w-40">
+    <thead class="table-danger">
+    <tr>
+        <td>
+            <b>Введите название дорожки, которую хотите забронировать</b>
+        </td>
+        <td>
+            <b>Сумма</b>
+        </td>
+        <td>
+            <b>Время</b>
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in ef.Payments.ToList())
+    {
+        <tr>
+            <td>
+                @item.TrackId @item.Amount
+            </td>
+            <td>
+                @item.Time
+            </td>
+            
+        </tr>
+    }
+    </tbody>
+
+</table>
+
+
+
+@code {
+    private Bowling.Models.Payment _payment = new Bowling.Models.Payment();
+
+    private void Submit(EditContext arg)
+    {
+        ef.Add(_payment);
+        ef.SaveChanges();
+        _payment = new Bowling.Models.Payment();
+    }
+
+}
