@@ -1,7 +1,53 @@
 ﻿@page "/"
+@rendermode InteractiveServer
+@using Database
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.Infrastructure
+@inject BowlingContext ef
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Бронирование</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Забронировать дорожку</h1>
 
-Welcome to your new app.
+
+<div class="row g-4">
+    @foreach (var item in ef.Tracks.ToList())
+    {
+        <div class="col-md-4 md-4">
+            <div class="card custom-card">
+                <h5 class="custom-card-title fw-bold">@item.TrackName</h5>
+                <h6 class="card-subtitle mb-2 text-white">@item.IsAvailable @item.Amount</h6>
+                
+                <a href="/TrackPage/@item.Id" class="card-link">Оплата</a>
+                <a href="/BookingTrack" class="card-link">Забронировать Дорожку</a>
+            </div>
+        </div>
+    }
+</div>
+
+
+@code{
+
+   
+
+    [Parameter] public int Id { get; set; }
+    private Bowling.Models.Booking? _booking;
+    private Bowling.Models.Payment? _isPayment;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _booking = ef.Bookings.FirstOrDefault(x =>x.Id == Id);
+        
+    }
+
+    private void Save()
+    {
+        if (_booking is null) return;
+        ef.Update(_booking);
+        ef.SaveChanges();
+    }
+
+}
+
+

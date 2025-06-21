@@ -1,0 +1,68 @@
+@page "/Client"
+@rendermode InteractiveServer
+@using Database
+@using Bowling.Models
+@inject BowlingContext ef
+
+
+<h3>Регистрация</h3>
+<EditForm FormName="formAddItem" Model="_client" OnValidSubmit="@Submit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <p>Введите Имя</p>
+    <input type="text" @bind="@_client.FirstName"/>
+    <p>Введите Фамилию</p>
+    <input type="text" @bind="_client.LastName"/>
+    <p>Введите свой номер телефона</p>
+    <input type="tel" placeholder="+7000-000-00-00*" class="input" @bind-value="_client.PhoneNumber" />
+    <p>Введите почту</p>
+    <input type="text" @bind="_client.Email"/>
+    <p>Введите пароль</p>
+    <input type="password" @bind="_client.Password"/>
+    <button type="submit">Сохранить пользователя</button>
+</EditForm>
+
+<table class="table table-bordered w-40">
+    <thead class="table-danger">
+    <tr>
+        <td>
+            <b>Имя Фамилия</b>
+        </td>
+        <td>
+            <b>Номер телефона</b>
+        </td>
+        <td>
+            <b>Почта</b>
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in ef.Clients.ToList())
+    {
+        <tr>
+            <td>
+                @item.FirstName @item.LastName
+            </td>
+            <td>
+                @item.PhoneNumber
+            </td>
+            <td>
+                @item.Email
+            </td>
+        </tr>
+    }
+    </tbody>
+
+</table>
+
+
+
+@code {
+    private Bowling.Models.Client _client = new Bowling.Models.Client();
+
+    private void Submit(EditContext arg)
+    {
+        ef.Add(_client);
+        ef.SaveChanges();
+        _client = new Bowling.Models.Client();
+    }
+}

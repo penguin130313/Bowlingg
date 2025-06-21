@@ -1,0 +1,101 @@
+@page "/BookingTrack"
+@rendermode InteractiveServer
+@using Database
+@using Microsoft.EntityFrameworkCore
+@using Bowling.Models
+@inject BowlingContext ef
+<h3>Забронировать дорожку</h3>
+
+
+<EditForm FormName="formAddItem" Model="_booking" OnValidSubmit="@Submit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <p>Название Дорожки</p>
+    <select @bind="@_booking.TrackId" class="form-select" aria-label="Default select example">
+        <option selected>Название Дорожки</option>
+        @foreach (var item in ef.Tracks.ToList())
+        {
+            <option value="@item.Id">@item.TrackName</option>
+        }
+    </select>
+    <p>Оплата</p>
+    <select @bind="@_booking.Payment" class="form-select" aria-label="Default select example">
+        <option selected>Оплата</option>
+        @foreach (var item in ef.Payments.ToList())
+        {
+            <option value="@item.Id">@item.Amount @item.Time</option>
+        }
+    </select>
+    <p>Клиент</p>
+    <select @bind="@_booking.ClientId" class="form-select" aria-label="Default select example">
+        <option selected>Анастасия</option>
+        @foreach (var item in ef.Clients.ToList())
+        {
+            <option value="@item.Id">@item.Email @item.LastName @item.FirstName @item.PhoneNumber</option>
+        }
+    </select>
+    <button type="submit">Сохранить</button>
+ </EditForm>
+
+<table class="table table-bordered w-40">
+    <thead class="table-danger">
+    <tr>
+        <td>
+            <b>Название Дорожки</b>
+        </td>
+        <td>
+            <b>Оплата</b>
+        </td>
+        <td>
+            <b>Клиент</b>
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach(var item in ef.Bookings.Include(x=>x.Track).
+             Include(x=> x.Payment).
+             Include(x=>x.Client).ToList())
+    {
+        <tr>
+            <td>
+                @item.Track.TrackName @item.Track.IsAvailable @item.Track.Amount
+            </td>
+
+            <td>
+                @item.Payment.TrackId.@item.Payment.Amount @item.Payment.Time
+            </td>
+            <td>
+                @item.Client.Email @item.Client.FirstName @item.Client.LastName @item.Client.Password @item.Client.PhoneNumber
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@code {
+    [Parameter] public int Id { get; set; }
+    public Bowling.Models.Booking _booking= new Bowling.Models.Booking();
+    private Bowling.Models.Track _track;
+    public DateTime _DateTime = DateTime.Now;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _booking = ef.Bookings.FirstOrDefault(x => x.Id == Id) ?? new Bowling.Models.Booking();
+
+    }
+
+    private void Submit(EditContext arg)
+    {
+        ef.Add(_track);
+        ef.SaveChanges();
+        _booking = new Bowling.Models.Booking();
+    }
+
+    private void Save()
+    {
+        if (_booking is null) return;
+        ef.Update(_booking);
+        ef.SaveChanges();
+    }
+
+}

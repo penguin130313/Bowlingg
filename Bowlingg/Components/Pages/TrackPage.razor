@@ -1,0 +1,65 @@
+﻿@page "/TrackPage/{id:int}"
+@rendermode InteractiveServer
+@using Database
+@using Microsoft.EntityFrameworkCore
+@using Bowling.Models
+@inject BowlingContext ef
+<PageTitle>Дорожка</PageTitle>
+
+<h1 class="movie-title">@_track.TrackName</h1>
+<a class="movie-discript">@_track.IsAvailable</a>
+<a class="movie-discript">@_track.Amount</a>
+
+<table class="table table-bordered w-40">
+    <thead class="table-success">
+    <tr>
+        <td>
+            <b>Название</b>
+        </td>
+        <td>
+            <b>Доступность</b>
+        </td>
+        <td>
+            <b>Сумма</b>
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in ef.Payments.Include(x => x.Track)
+                  .Where(name => name.Track.TrackName == _track.TrackName).ToList())
+    {
+        <tr>
+            <td>
+                @item.Amount
+            </td>
+            <td>
+                @item.Time
+            </td>
+        </tr>
+    }
+        
+    </tbody>
+</table>
+
+
+
+@code {
+  [Parameter] public int Id { get; set; }
+  private Bowling.Models.Track _track;
+
+  protected override void OnInitialized()
+  {
+      base.OnInitialized();
+      _track = ef.Tracks
+          .FirstOrDefault(x => x.Id == Id);
+  }
+
+  private void Save()
+  {
+      if(_track is null) return;
+      ef.Update(_track);
+      ef.SaveChanges();
+  }
+
+
+}

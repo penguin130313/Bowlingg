@@ -1,0 +1,37 @@
+@page "/ClientProfile"
+@rendermode InteractiveServer
+@using Database
+@using Microsoft.EntityFrameworkCore
+@using Bowling.Models
+@using Microsoft.EntityFrameworkCore.Infrastructure
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@inject BowlingContext ef 
+<h3>Профиль</h3>
+
+<h3>Регистрация</h3>
+
+<EditForm FormName="formAddItem" Model="_client" OnValidSubmit="@Submit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <p>Введите Имя</p>
+    <input type="text" @bind="@_client.FirstName"/>
+    <p>Введите Фамилию</p>
+    <input type="text" @bind="_client.LastName"/>
+    <p>Введите свой номер телефона</p>
+    <input type="tel" placeholder="+7000-000-00-00*" class="input" @bind-value="_client.PhoneNumber" />
+    <p>Введите почту</p>
+    <input type="text" @bind="_client.Email"/>
+    <p>Введите пароль</p>
+    <input type="password" @bind="_client.Password"/>
+    <button type="submit">Сохранить пользователя</button>
+</EditForm>
+
+@code {
+    private Bowling.Models.Client _client = new Bowling.Models.Client();
+
+    private void Submit(EditContext arg)
+    {
+        ef.Add(_client);
+        ef.SaveChanges();
+        _client = new Bowling.Models.Client();
+    }
+}

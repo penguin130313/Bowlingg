@@ -1,0 +1,68 @@
+@page "/Track"
+@rendermode InteractiveServer
+@using System.ComponentModel
+@using Database
+@using Bowling.Models
+@inject BowlingContext ef
+<h3>Добавление дорожки</h3>
+<EditForm FormName="formAddItem" Model="_track" OnValidSubmit="@Submit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <p>Название дорожки</p>
+    <input type="text" @bind="@_track.TrackName"/>
+    <p>Доступность</p>
+    <input type="text" @bind="_track.IsAvailable"/>
+    
+    
+    <button type="submit">Сохранить</button>
+</EditForm>
+
+<table class="table table-bordered w-40">
+<thead class="table-danger">
+<tr>
+    <td>
+        <b>Название дорожки</b>
+    </td>
+    <td>
+        <b>Доступность</b>
+    </td>
+    
+</tr>
+</thead>
+<tbody>
+@foreach (var item in ef.Tracks.ToList())
+{
+    <tr>
+        <td>
+            @item.TrackName 
+        </td>
+        <td>
+            @item.IsAvailable
+        </td>
+
+    </tr>
+}
+</tbody>
+
+</table>
+
+
+
+@code {
+    private Bowling.Models.Track _track = new Bowling.Models.Track();
+ 
+
+    private void Submit(EditContext arg)
+    {
+        ef.Add(_track);
+        ef.SaveChanges();
+        _track = new Bowling.Models.Track();
+    }
+
+  
+
+   
+    
+
+
+}
+    
