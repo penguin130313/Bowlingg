@@ -9,11 +9,9 @@ public class Booking
     [ForeignKey("ClientId")]public Client? Client { get; set; }
     public int? TrackId { get; set; }
     [ForeignKey("TrackId")]public Track? Track { get; set; }
-    public int? BookingId { get; set; }
+    public int? PaymentId { get; set; }
     [ForeignKey("PaymentId")]public Payment? Payment { get; set; }
    
-    public DateTime RecDateTime { get; set; } 
-    
-    
-
+    public DateTime RecDateTime { get; set; }
+   
 }

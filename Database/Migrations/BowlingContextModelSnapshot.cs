@@ -23,9 +23,6 @@ namespace Database.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("BookingId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int?>("ClientId")
                         .HasColumnType("INTEGER");
 
@@ -46,7 +43,7 @@ namespace Database.Migrations
 
                     b.HasIndex("TrackId");
 
-                    b.ToTable("Booking");
+                    b.ToTable("Bookings");
                 });
 
             modelBuilder.Entity("Bowling.Models.Client", b =>

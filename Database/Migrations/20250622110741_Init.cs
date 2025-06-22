@@ -65,50 +65,49 @@ namespace Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Booking",
+                name: "Bookings",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ClientId = table.Column<int>(type: "INTEGER", nullable: true),
                     TrackId = table.Column<int>(type: "INTEGER", nullable: true),
-                    BookingId = table.Column<int>(type: "INTEGER", nullable: true),
                     PaymentId = table.Column<int>(type: "INTEGER", nullable: true),
                     RecDateTime = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Booking", x => x.Id);
+                    table.PrimaryKey("PK_Bookings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Booking_Clients_ClientId",
+                        name: "FK_Bookings_Clients_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Clients",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Booking_Payments_PaymentId",
+                        name: "FK_Bookings_Payments_PaymentId",
                         column: x => x.PaymentId,
                         principalTable: "Payments",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Booking_Tracks_TrackId",
+                        name: "FK_Bookings_Tracks_TrackId",
                         column: x => x.TrackId,
                         principalTable: "Tracks",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Booking_ClientId",
-                table: "Booking",
+                name: "IX_Bookings_ClientId",
+                table: "Bookings",
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Booking_PaymentId",
-                table: "Booking",
+                name: "IX_Bookings_PaymentId",
+                table: "Bookings",
                 column: "PaymentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Booking_TrackId",
-                table: "Booking",
+                name: "IX_Bookings_TrackId",
+                table: "Bookings",
                 column: "TrackId");
 
             migrationBuilder.CreateIndex(
@@ -121,7 +120,7 @@ namespace Database.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Booking");
+                name: "Bookings");
 
             migrationBuilder.DropTable(
                 name: "Clients");

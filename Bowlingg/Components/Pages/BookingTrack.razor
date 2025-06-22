@@ -1,3 +1,4 @@
+
 @page "/BookingTrack"
 @rendermode InteractiveServer
 @using Database
@@ -9,32 +10,56 @@
 
 <EditForm FormName="formAddItem" Model="_booking" OnValidSubmit="@Submit">
     <DataAnnotationsValidator></DataAnnotationsValidator>
-    <p>Название Дорожки</p>
-    <select @bind="@_booking.TrackId" class="form-select" aria-label="Default select example">
-        <option selected>Название Дорожки</option>
+    <p>Введите название дорожки</p>
+    <select @bind="_booking.TrackId" class="form-select" aria-label="Default select example">
+        <option selected>Название дорожки</option>
         @foreach (var item in ef.Tracks.ToList())
         {
             <option value="@item.Id">@item.TrackName</option>
         }
     </select>
-    <p>Оплата</p>
-    <select @bind="@_booking.Payment" class="form-select" aria-label="Default select example">
-        <option selected>Оплата</option>
-        @foreach (var item in ef.Payments.ToList())
-        {
-            <option value="@item.Id">@item.Amount @item.Time</option>
-        }
-    </select>
-    <p>Клиент</p>
+    <p>Введите свое имя и фамилию</p>
     <select @bind="@_booking.ClientId" class="form-select" aria-label="Default select example">
-        <option selected>Анастасия</option>
+        <option selected>Имя Фамилия</option>
         @foreach (var item in ef.Clients.ToList())
         {
-            <option value="@item.Id">@item.Email @item.LastName @item.FirstName @item.PhoneNumber</option>
+
+            <option value="@item.Id"> @item.LastName @item.FirstName </option>
         }
     </select>
-    <button type="submit">Сохранить</button>
- </EditForm>
+    <p>Введите свой номер телефона</p>
+    <select @bind="@_booking.ClientId" class="form-select" aria-label="Default select example">
+        <option selected>Номер телефона</option>
+        @foreach (var item in ef.Clients.ToList())
+        {
+            <option value="@item.Id"> @item.PhoneNumber </option>
+        }
+    </select>
+    <p>Введите время, в которое хотите забронировать дорожку</p>
+    <select @bind="@_booking.PaymentId" class="form-select" aria-label="Default select example">
+        <option selected>Время</option>
+        @foreach (var item in ef.Payments.ToList())
+        {
+
+            <option value="@item.Id"> @item.Time </option>
+        }
+    </select>
+
+    <p>Введите сумму для оплаты</p>
+    <select @bind="@_booking.PaymentId" class="form-select" aria-label="Default select example">
+        <option selected>Сумма</option>
+        @foreach (var item in ef.Payments.ToList())
+        {
+            <option value="@item.Id">@item.Amount </option>
+        }
+    </select>
+   
+   
+    
+  
+  
+    <button type="submit">Оплатить</button>
+</EditForm>
 
 <table class="table table-bordered w-40">
     <thead class="table-danger">
@@ -43,10 +68,16 @@
             <b>Название Дорожки</b>
         </td>
         <td>
-            <b>Оплата</b>
+            <b>Имя Фамилия</b>
         </td>
         <td>
-            <b>Клиент</b>
+            <b>Номер телефона</b>
+        </td>
+        <td>
+            <b>Время</b>
+        </td>
+        <td>
+            <b>Оплата</b>
         </td>
     </tr>
     </thead>
@@ -73,7 +104,7 @@
 
 @code {
     [Parameter] public int Id { get; set; }
-    public Bowling.Models.Booking _booking= new Bowling.Models.Booking();
+    public Bowling.Models.Booking _booking = new Bowling.Models.Booking();
     private Bowling.Models.Track _track;
     public DateTime _DateTime = DateTime.Now;
 
